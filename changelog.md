@@ -1,0 +1,1 @@
+Primera versión del complemento. Si todavía no lo has hecho, consulta la documentación para descubrir todas las funciones que ofrece.
