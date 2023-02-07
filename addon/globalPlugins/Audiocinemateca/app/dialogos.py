@@ -563,7 +563,7 @@ class posicion(wx.Dialog):
 		self.Panel = wx.Panel(self)
 
 		label1 = wx.StaticText(self.Panel, wx.ID_ANY, label=_("&Introduzca un número entre 1 y {}:").format(self.datos))
-		self.numero = wx.TextCtrl(self.Panel, wx.ID_ANY)
+		self.numero = wx.TextCtrl(self.Panel, 101, "", style=wx.TE_PROCESS_ENTER)
 
 		self.AceptarBTN = wx.Button(self.Panel, 0, label=_("&Aceptar"))
 		self.Bind(wx.EVT_BUTTON, self.onAceptar, id=self.AceptarBTN.GetId())
@@ -587,6 +587,7 @@ class posicion(wx.Dialog):
 		self.Panel.SetSizer(sizeV)
 
 		self.CenterOnScreen()
+
 
 	def onAceptar(self, event):
 		msg = \
@@ -619,7 +620,13 @@ Solo se admite un número comprendido entre 1 y {}.""").format(self.datos)
 				return
 
 	def onkeyVentanaDialogo(self, event):
-		if event.GetKeyCode() == 27: # Pulsamos ESC y cerramos la ventana
+		foco = wx.Window.FindFocus().GetId()
+		robot = wx.UIActionSimulator()
+		if event.GetUnicodeKey() == wx.WXK_RETURN:
+			if foco in [101]: # campo texto pasamos.
+				self.onAceptar(None)
+
+		elif event.GetKeyCode() == 27: # Pulsamos ESC y cerramos la ventana
 			if self.IsModal():
 				self.EndModal(1)
 			else:
