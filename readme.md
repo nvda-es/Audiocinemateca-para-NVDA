@@ -2,11 +2,11 @@
 
 Este complemento nos ofrece la posibilidad de tener la página de la Audiocinemateca en nuestro NVDA.
 
-Si no sabes lo que es la Audiocinemateca, aconsejo dar un paseo por aquí:
+La audiocinemateca es un sitio web, creado en el año 2015, que mantiene y actualiza una colección de películas, series, documentales y cortometrajes en formato sólo audio con audiodescripción para personas ciegas, totalmente gratis y en español.
 
-[Página oficial de la Audiocinemateca](https://audiocinemateca.com)
+Si quieres conocerla antes de profundizar en este complemento, [visita la audiocinemateca pinchando en este enlace](https://audiocinemateca.com).
 
-Si continúas, significa que la conoces. Ahora, en NVDA, podrás tener en un complemento la Audiocinemateca.
+Este complemento permite acceder al contenido de la web desde una interfaz nativa de Windows, sencilla, con atajos de teclado y sin necesidad de abrir un programa adicional, con todas sus funciones integradas en NVDA.
 
 ## Qué ofrece el complemento
 
