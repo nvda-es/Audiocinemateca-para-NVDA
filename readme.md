@@ -32,7 +32,7 @@ El complemento requiere que tengamos un usuario y contraseña válidos de la Aud
 
 El complemento viene sin la base de datos, por lo que la primera vez que ejecutemos el complemento nos pedirá que descarguemos la base de datos.
 
-La primera vez que ejecutemos el complemento, se nos pedirá que metamos nuestro usuario y contraseña de la Audiocinemateca. En la pantalla de iniciar sesión podremos también ir a la página web para registrarnos o solicitar una nueva contraseña, en caso de no acordarnos, simplemente pulsando el botón "Visitar la web".
+La primera vez que ejecutemos el complemento, se nos pedirá que metamos nuestro usuario y contraseña de la Audiocinemateca. En la pantalla de iniciar sesión podremos también ir a la página web para registrarnos o solicitar una nueva contraseña, en caso de no acordarnos, simplemente pulsando el botón "Visitar la web". Si creaste tu cuenta iniciando sesión desde Facebook o tienes activada la verificación en dos pasos, no podrás usar este complemento.
 
 Una vez verificados, se nos pedirá que descarguemos la base de datos. Si no tenemos la base de datos el complemento no iniciará, por lo que tenemos que decir que si.
 
