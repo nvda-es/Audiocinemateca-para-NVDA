@@ -73,9 +73,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def mensaje(self):
 		msg = \
-_("""La ventana de Audiocinemateca esta abierta.
+_("""La ventana de Audiocinemateca está abierta.
 
-Las teclas para manejar el reproductor de manera externa solo se pueden usar si la pantalla de la Audiocinemateca esta cerrada.""")
+Las teclas para manejar el reproductor de manera externa solo se pueden usar si la pantalla de la Audiocinemateca está cerrada.""")
 		return msg
 	def terminate(self):
 		try:
@@ -93,7 +93,7 @@ Las teclas para manejar el reproductor de manera externa solo se pueden usar si 
 
 	def defecto_Menu(self, event):
 		msg = \
-_("""El complemento solo se puede volver a valores por defecto cuando no esta cargada la interface y no hay nada reproduciéndose.""")
+_("""El complemento solo se puede volver a valores por defecto cuando no está cargada la interfaz y no hay nada reproduciéndose.""")
 		if ajustes.IS_WinON:
 			gui.messageBox(msg, _("Información"), wx.ICON_INFORMATION)
 		else:
@@ -101,7 +101,7 @@ _("""El complemento solo se puede volver a valores por defecto cuando no esta ca
 				xguiMsg = \
 _("""El complemento borrará toda la configuración guardada y volverá a valores por defecto.
 
-¿Esta seguro que desea continuar?""")
+¿Está seguro de que desea continuar?""")
 				msgx = wx.MessageDialog(None, xguiMsg, "Pregunta", wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 				ret = msgx.ShowModal()
 				if ret == wx.ID_YES:
@@ -151,7 +151,7 @@ _("""Ya hay una instancia de Audiocinemateca abierta.""")
 			HiloComplemento(self, 2).start()
 		else:
 			msg = \
-_("""La ventana de opciones solo puede ser llamada cuando la interface de la Audiocinemateca esta cerrada y cuando no hay nada reproduciéndose.""")
+_("""La ventana de opciones solo puede ser llamada cuando la interfaz de la Audiocinemateca está cerrada y cuando no hay nada reproduciéndose.""")
 			if menu:
 				gui.messageBox(msg, _("Información"), wx.ICON_INFORMATION)
 			else:
@@ -163,7 +163,7 @@ _("""La ventana de opciones solo puede ser llamada cuando la interface de la Aud
 			ui.message(self.mensaje())
 		else:
 			if ajustes.volumen == 0:
-				ui.message(_("No se puede bajar más el volumen ya se encuentra al 0%"))
+				ui.message(_("No se puede bajar más el volumen. Ya se encuentra al 0%"))
 			else:
 				volTemporal = ajustes.volumen - 1
 				ajustes.volumen = volTemporal
@@ -177,7 +177,7 @@ _("""La ventana de opciones solo puede ser llamada cuando la interface de la Aud
 			ui.message(self.mensaje())
 		else:
 			if ajustes.volumen == 100:
-				ui.message(_("No se puede subir más el volumen ya se encuentra al 100%"))
+				ui.message(_("No se puede subir más el volumen. Ya se encuentra al 100%"))
 			else:
 				volTemporal = ajustes.volumen + 1
 				ajustes.volumen = volTemporal
@@ -191,7 +191,7 @@ _("""La ventana de opciones solo puede ser llamada cuando la interface de la Aud
 			ui.message(self.mensaje())
 		else:
 			if ajustes.velocidad == 0:
-				ui.message(_("No se puede bajar más la velocidad ya se encuentra al mínimo posible"))
+				ui.message(_("No se puede bajar más la velocidad. Ya se encuentra al mínimo posible"))
 			else:
 				velTemporal = ajustes.velocidad - 1
 				ajustes.velocidad = velTemporal
@@ -205,7 +205,7 @@ _("""La ventana de opciones solo puede ser llamada cuando la interface de la Aud
 			ui.message(self.mensaje())
 		else:
 			if ajustes.velocidad == 17:
-				ui.message(_("No se puede subir más la velocidad ya se encuentra al maximo"))
+				ui.message(_("No se puede subir más la velocidad. Ya se encuentra al máximo"))
 			else:
 				velTemporal = ajustes.velocidad + 1
 				ajustes.velocidad = velTemporal
@@ -245,7 +245,7 @@ _("""La ventana de opciones solo puede ser llamada cuando la interface de la Aud
 		if ajustes.IS_WinON:
 			ui.message(self.mensaje())
 		else:
-			msg = _("Deteniendo...") if self.reproductor.estado() in ["State.Playing", "State.Paused"] else _("Sin nada en reproducción")
+			msg = _("Detenido") if self.reproductor.estado() in ["State.Playing", "State.Paused"] else _("Sin nada en reproducción")
 			ui.message(msg)
 			self.reproductor.stop()
 

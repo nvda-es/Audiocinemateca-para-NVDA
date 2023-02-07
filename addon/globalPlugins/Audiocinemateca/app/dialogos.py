@@ -725,7 +725,7 @@ class Previsualizador(wx.Dialog):
 		self.textoResultado.WriteText(_("Año:\n"))
 		self.textoResultado.WriteText(anio + "\n")
 
-		self.textoResultado.WriteText(_("Genero:\n"))
+		self.textoResultado.WriteText(_("Género:\n"))
 		self.textoResultado.WriteText(genero + "\n")
 
 		self.textoResultado.WriteText(_("País:\n"))
@@ -734,7 +734,7 @@ class Previsualizador(wx.Dialog):
 		self.textoResultado.WriteText(_("Director:\n"))
 		self.textoResultado.WriteText(director + "\n")
 
-		self.textoResultado.WriteText(_("Guion:\n"))
+		self.textoResultado.WriteText(_("Guión:\n"))
 		self.textoResultado.WriteText(guion + "\n")
 
 		self.textoResultado.WriteText(_("Música:\n"))

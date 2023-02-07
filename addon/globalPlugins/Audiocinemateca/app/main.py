@@ -78,13 +78,13 @@ _("""Cargando la interface...""")
 		self.choice_ultimos.SetSelection(0)
 		sizer_principal_general.Add(self.choice_ultimos, 0, wx.EXPAND, 0)
 
-		label_2 = wx.StaticText(self.panel_general, wx.ID_ANY, _("&Lista de las ultimas entradas:"))
+		label_2 = wx.StaticText(self.panel_general, wx.ID_ANY, _("&Lista de las últimas entradas:"))
 		sizer_principal_general.Add(label_2, 0, wx.EXPAND, 0)
 
 		self.list_box_ultimos = wx.ListBox(self.panel_general, 2)
 		sizer_principal_general.Add(self.list_box_ultimos, 1, wx.ALL | wx.EXPAND, 0)
 
-		self.aleatorioBTN = wx.Button(self.panel_general, 3, _("¿No sabes que ver? &Pulsa aquí y te ofreceré algo, haber si acierto."))
+		self.aleatorioBTN = wx.Button(self.panel_general, 3, _("¿No sabes qué ver? &Pulsa aquí y te ofreceré algo, a ver si acierto."))
 		sizer_principal_general.Add(self.aleatorioBTN, 0, wx.EXPAND, 0)
 
 		self.panel_peliculas = wx.Panel(self.lst_book, wx.ID_ANY)
@@ -281,7 +281,7 @@ _("""Pausando la reproducción hasta que cargue la interface.""")
 				utilidades.speak(0.1, msg)
 			self.IS_SONANDO = True
 
-		# Mostramos ultimas 10 peliculas.
+		# Mostramos últimas 10 peliculas.
 		for i in range(ajustes.dict_resultados.get(ajustes.resultados)):
 			self.list_box_ultimos.Append(self.Peliculas.peliculas[i].titulo)
 		self.list_box_ultimos.SetSelection(0)
@@ -837,7 +837,7 @@ class VentanaOpciones(wx.Dialog):
 		self.checkbox_1.SetValue(ajustes.IS_HABLAR)
 		sizer_list_general.Add(self.checkbox_1, 0, wx.EXPAND, 0)
 
-		label_1 = wx.StaticText(self.panel_list_general, wx.ID_ANY, _("Cantidad de resultados a mostrar de las &ultimas entradas"))
+		label_1 = wx.StaticText(self.panel_list_general, wx.ID_ANY, _("Cantidad de resultados a mostrar de las &últimas entradas"))
 		sizer_list_general.Add(label_1, 0, wx.EXPAND, 0)
 
 		self.choice_resultados = wx.Choice(self.panel_list_general, 2, choices=ajustes.listaResultados)
