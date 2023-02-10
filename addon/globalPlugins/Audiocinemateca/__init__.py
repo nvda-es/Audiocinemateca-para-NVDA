@@ -36,6 +36,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.reproductor = None
 		self.reproductorKeyboard = None
 		self.datos = None
+		self.categoriaBusqueda = [0, 0, 0, 0]
 		if hasattr(globalVars, "audiocinemateca_nvda"):
 			self.postStartupHandler()
 		core.postNvdaStartup.register(self.postStartupHandler)

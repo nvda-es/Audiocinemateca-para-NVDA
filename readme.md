@@ -185,6 +185,52 @@ El documento principal no se modificará, siendo una orientación para el usuari
 
 El usuario es el responsable de revisar esta sección para estar informado de los cambios.
 
+### Versión 1.1.
+
+* Añadidos filtros de búsqueda.
+
+Se han añadido los siguientes filtros de búsqueda:
+
+Título, año, genero, país, director, guion, música, fotografía, reparto, productora, narración y sinopsis.
+
+Por defecto cuando lancemos el complemento después de iniciar NVDA el filtro elegido en todas las categorías es por título.
+
+Los filtros una vez elegidos se mantendrán en la sesión actual de NVDA, esto quiere decir que mientras no cerremos NVDA los filtros elegidos se mantendrán indiferentemente de si cerramos la interface de la Audiocinemateca.
+
+Cada categoría tiene independencia de filtros, lo que quiere decir que podemos buscar en películas por año por ejemplo y en series por narración.
+
+Para poder elegir los filtros tendremos que tener el foco en el campo de búsqueda de cualquiera de las categorías y pulsar Ctrl+F. Aparecerá un menú con todos los filtros, el filtro actual estará marcado. Al pulsar intro en un filtro se seleccionará y quedará marcado ese filtro.
+
+También en la etiqueta identificativa del campo de búsqueda cambiara al filtro que hayamos elegido.
+
+* Añadido atajo de teclado para borrar rápidamente los campos de búsqueda.
+
+Ahora si en un campo de búsqueda de cualquiera de las categorías pulsamos Ctrl+B el campo de texto se borrara.
+
+Si el campo ya a echo una búsqueda el comportamiento es como si hiciéramos intro, borrara el texto y nos mostrara todos los títulos de esa categoría.
+
+Si no hemos hecho ninguna búsqueda borrará el texto que haya en el campo de búsqueda y no hará nada más.
+
+* Añadido F12 para activar o desactivar los mensajes en la pantalla principal y secundarias.
+
+Ahora podremos desactivar los mensajes informativos si lo deseamos sin necesidad de entrar al dialogo de opciones. Pulsando F12 nos informara si se desactivan o activan los mensajes.
+
+* Corregido al pulsar intro en cuadro de texto en el dialogo ir a la posición.
+
+Se a corregido que si apretábamos intro en el campo de texto del dialogo de posición a veces si había un valor erróneo no actuaba como toca.
+
+* Corregido size de la ventana principal a 800x600.
+
+Se a corregido la resolución del complemento a 800x600 para soportar monitores más antiguos.
+
+Esto esta pendiente de valoración según llegue retroalimentación de usuarios con resto visual.
+
+Se intentará dar la resolución óptima para todos.
+
+* Corrección de errores internos y ortográficos.
+
+Se agradece que si se encuentran errores ortográficos por favor los mencionéis y con gusto se corregirán.
+
 ### Versión 1.0.
 
 * Versión inicial.

@@ -232,10 +232,10 @@ class ColeccionPeliculas:
 		original_indice = len(self.reversed_datos) - indice - 1
 		return self.datos[original_indice]
 
-	def buscar(self, valor):
+	def buscar(self, valor, categoria):
 		results = []
 		for pelicula in self.reversed_datos:
-			if valor in pelicula['Titulo'].lower():
+			if valor in pelicula[categoria].lower():
 				results.append(pelicula)
 		return results if len(results) >= 1 else None
 
@@ -268,10 +268,10 @@ class ColeccionSeries:
 		original_indice = len(self.reversed_datos) - indice - 1
 		return self.datos[original_indice]
 
-	def buscar(self, valor):
+	def buscar(self, valor, categoria):
 		results = []
 		for serie in self.reversed_datos:
-			if valor in serie['titulo'].lower():
+			if valor in serie[categoria].lower():
 				results.append(serie)
 		return results if len(results) >= 1 else None
 
@@ -304,10 +304,10 @@ class ColeccionDocumentales:
 		original_indice = len(self.reversed_datos) - indice - 1
 		return self.datos[original_indice]
 
-	def buscar(self, valor):
+	def buscar(self, valor, categoria):
 		results = []
 		for documental in self.reversed_datos:
-			if valor in documental['titulo'].lower():
+			if valor in documental[categoria].lower():
 				results.append(documental)
 		return results if len(results) >= 1 else None
 
@@ -340,10 +340,10 @@ class ColeccionCortometrajes:
 		original_indice = len(self.reversed_datos) - indice - 1
 		return self.datos[original_indice]
 
-	def buscar(self, valor):
+	def buscar(self, valor, categoria):
 		results = []
 		for cortometraje in self.reversed_datos:
-			if valor in cortometraje['titulo'].lower():
+			if valor in cortometraje[categoria].lower():
 				results.append(cortometraje)
 		return results if len(results) >= 1 else None
 

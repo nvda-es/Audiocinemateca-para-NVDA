@@ -18,7 +18,7 @@ addonHandler.initTranslation()
 
 class VentanaPrincipal(wx.Dialog):
 	def __init__(self, parent, frame):
-		super(VentanaPrincipal, self).__init__(parent, -1, _("Audiocinemateca"), size = (1400, 850))
+		super(VentanaPrincipal, self).__init__(parent, -1, _("Audiocinemateca"), size = (800, 600)) #(1400, 850))
 
 		msg = \
 _("""Cargando la interface...""")
@@ -92,8 +92,8 @@ _("""Cargando la interface...""")
 
 		sizer_principal_peliculas = wx.BoxSizer(wx.VERTICAL)
 
-		label_6 = wx.StaticText(self.panel_peliculas, wx.ID_ANY, _(u"&Buscar películas:"))
-		sizer_principal_peliculas.Add(label_6, 0, wx.EXPAND, 0)
+		self.label_6 = wx.StaticText(self.panel_peliculas, wx.ID_ANY, _(u"&Buscar películas por {}:").format(ajustes.listaFiltroBusqueda[self.frame.categoriaBusqueda[0]]))
+		sizer_principal_peliculas.Add(self.label_6, 0, wx.EXPAND, 0)
 
 		self.text_busqueda_peliculas = wx.TextCtrl(self.panel_peliculas, 101, "", style=wx.TE_PROCESS_ENTER)
 		sizer_principal_peliculas.Add(self.text_busqueda_peliculas, 0, wx.EXPAND, 0)
@@ -112,8 +112,8 @@ _("""Cargando la interface...""")
 
 		sizer_principal_series = wx.BoxSizer(wx.VERTICAL)
 
-		label_8 = wx.StaticText(self.panel_series, wx.ID_ANY, _("&Buscar series:"))
-		sizer_principal_series.Add(label_8, 0, wx.EXPAND, 0)
+		self.label_8 = wx.StaticText(self.panel_series, wx.ID_ANY, _("&Buscar series por {}:").format(ajustes.listaFiltroBusqueda[self.frame.categoriaBusqueda[1]]))
+		sizer_principal_series.Add(self.label_8, 0, wx.EXPAND, 0)
 
 		self.text_busqueda_series = wx.TextCtrl(self.panel_series, 201, "", style=wx.TE_PROCESS_ENTER)
 		sizer_principal_series.Add(self.text_busqueda_series, 0, wx.EXPAND, 0)
@@ -132,8 +132,8 @@ _("""Cargando la interface...""")
 
 		sizer_principal_documentales = wx.BoxSizer(wx.VERTICAL)
 
-		label_10 = wx.StaticText(self.panel_documentales, wx.ID_ANY, _("&Buscar documentales:"))
-		sizer_principal_documentales.Add(label_10, 0, wx.EXPAND, 0)
+		self.label_10 = wx.StaticText(self.panel_documentales, wx.ID_ANY, _("&Buscar documentales por {}:").format(ajustes.listaFiltroBusqueda[self.frame.categoriaBusqueda[2]]))
+		sizer_principal_documentales.Add(self.label_10, 0, wx.EXPAND, 0)
 
 		self.text_busqueda_documentales = wx.TextCtrl(self.panel_documentales, 301, "", style=wx.TE_PROCESS_ENTER)
 		sizer_principal_documentales.Add(self.text_busqueda_documentales, 0, wx.EXPAND, 0)
@@ -152,8 +152,8 @@ _("""Cargando la interface...""")
 
 		sizer_principal_cortometrajes = wx.BoxSizer(wx.VERTICAL)
 
-		label_12 = wx.StaticText(self.panel_cortometrajes, wx.ID_ANY, _("&Buscar cortometrajes:"))
-		sizer_principal_cortometrajes.Add(label_12, 0, wx.EXPAND, 0)
+		self.label_12 = wx.StaticText(self.panel_cortometrajes, wx.ID_ANY, _("&Buscar cortometrajes por {}:").format(ajustes.listaFiltroBusqueda[self.frame.categoriaBusqueda[3]]))
+		sizer_principal_cortometrajes.Add(self.label_12, 0, wx.EXPAND, 0)
 
 		self.text_busqueda_cortometrajes = wx.TextCtrl(self.panel_cortometrajes, 401, "", style=wx.TE_PROCESS_ENTER)
 		sizer_principal_cortometrajes.Add(self.text_busqueda_cortometrajes, 0, wx.EXPAND, 0)
@@ -485,10 +485,74 @@ _("""Reanudando la reproducción.""")
 			dlg.Destroy()
 		return
 
+	def onTextFiltro(self, event):
+		id = event.GetId()
+		menu = wx.Menu()
+		if id == 101: # Campo peliculas
+			for i in range(len(ajustes.listaFiltroBusqueda)):
+				i = menu.Append(i+ 1000, ajustes.listaFiltroBusqueda[i], "", wx.ITEM_CHECK)
+			menu.Bind(wx.EVT_MENU_RANGE, self.onTextFiltroValor, id=1000, id2=len(ajustes.listaFiltroBusqueda)-1+1000)
+			menu.Check(self.frame.categoriaBusqueda[0]+1000, True)
+			self.text_busqueda_peliculas.PopupMenu(menu)
+		elif id == 201: # Campo series
+			for i in range(len(ajustes.listaFiltroBusqueda)):
+				i = menu.Append(i+ 2000, ajustes.listaFiltroBusqueda[i], "", wx.ITEM_CHECK)
+			menu.Bind(wx.EVT_MENU_RANGE, self.onTextFiltroValor, id=2000, id2=len(ajustes.listaFiltroBusqueda)-1+2000)
+			menu.Check(self.frame.categoriaBusqueda[1]+2000, True)
+			self.text_busqueda_series.PopupMenu(menu)
+		elif id == 301: # Campo documentales
+			for i in range(len(ajustes.listaFiltroBusqueda)):
+				i = menu.Append(i+ 3000, ajustes.listaFiltroBusqueda[i], "", wx.ITEM_CHECK)
+			menu.Bind(wx.EVT_MENU_RANGE, self.onTextFiltroValor, id=3000, id2=len(ajustes.listaFiltroBusqueda)-1+3000)
+			menu.Check(self.frame.categoriaBusqueda[2]+3000, True)
+			self.text_busqueda_documentales.PopupMenu(menu)
+		elif id == 401: # Campo cortometrajes
+			for i in range(len(ajustes.listaFiltroBusqueda)):
+				i = menu.Append(i+ 4000, ajustes.listaFiltroBusqueda[i], "", wx.ITEM_CHECK)
+			menu.Bind(wx.EVT_MENU_RANGE, self.onTextFiltroValor, id=4000, id2=len(ajustes.listaFiltroBusqueda)-1+4000)
+			menu.Check(self.frame.categoriaBusqueda[3]+4000, True)
+			self.text_busqueda_cortometrajes.PopupMenu(menu)
+
+	def onTextFiltroValor(self, event):
+		id = event.GetId()
+		if id in [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011]: # Filtro peliculas
+			self.frame.categoriaBusqueda[0] = id - 1000
+			self.label_6.SetLabel(_(u"&Buscar películas por {}:").format(ajustes.listaFiltroBusqueda[self.frame.categoriaBusqueda[0]]))
+		elif id in [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011]: # Filtro series
+			self.frame.categoriaBusqueda[1] = id - 2000
+			self.label_8.SetLabel(_(u"&Buscar series por {}:").format(ajustes.listaFiltroBusqueda[self.frame.categoriaBusqueda[1]]))
+		elif id in [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011]: # Filtro documentales
+			self.frame.categoriaBusqueda[2] = id - 3000
+			self.label_10.SetLabel(_(u"&Buscar documentales por {}:").format(ajustes.listaFiltroBusqueda[self.frame.categoriaBusqueda[2]]))
+		elif id in [4000, 4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010, 4011]: # Filtro cortometrajes
+			self.frame.categoriaBusqueda[3] = id - 4000
+			self.label_12.SetLabel(_(u"&Buscar cortometrajes por {}:").format(ajustes.listaFiltroBusqueda[self.frame.categoriaBusqueda[3]]))
+
 	def onTextEnter(self, event):
+		dict_filtro = {
+			0: "titulo",
+			1: "anio",
+			2: "genero",
+			3: "pais",
+			4: "director",
+			5: "guion",
+			6: "musica",
+			7: "fotografia",
+			8: "reparto",
+			9: "productora",
+			10: "narracion",
+			11: "sinopsis",
+		}
+		msg_info_1 = _("Cargando todos los títulos…")
+		msg_info_2 = _("No a echo ninguna búsqueda todavía. Ya se muestran todos los títulos.")
 		id = event.GetId()
 		if event.GetValue() == "": # Sin nada en el campo de busqueda volvemos a valores defecto
 			if id == 101: # peliculas
+				if self.IS_BUSQUEDA_PELICULAS:
+					if ajustes.IS_HABLAR: utilidades.speak(0.1, msg_info_1)
+				else:
+					if ajustes.IS_HABLAR: utilidades.speak(0.1, msg_info_2)
+					return
 				self.tempBusquedaPeliculas = None
 				self.IS_BUSQUEDA_PELICULAS = False
 				# Añadimos peliculas
@@ -497,6 +561,11 @@ _("""Reanudando la reproducción.""")
 					self.list_box_peliculas.Append(self.Peliculas.peliculas[i].titulo)
 				self.list_box_peliculas.SetSelection(0)
 			elif id == 201: # series
+				if self.IS_BUSQUEDA_SERIES:
+					if ajustes.IS_HABLAR: utilidades.speak(0.1, msg_info_1)
+				else:
+					if ajustes.IS_HABLAR: utilidades.speak(0.1, msg_info_2)
+					return
 				self.tempBusquedaSeries = None
 				self.IS_BUSQUEDA_SERIES = False
 				# Añadimos series
@@ -505,6 +574,11 @@ _("""Reanudando la reproducción.""")
 					self.list_box_series.Append(self.Series.series[i].titulo)
 				self.list_box_series.SetSelection(0)
 			elif id == 301: # documentales
+				if self.IS_BUSQUEDA_DOCUMENTALES:
+					if ajustes.IS_HABLAR: utilidades.speak(0.1, msg_info_1)
+				else:
+					if ajustes.IS_HABLAR: utilidades.speak(0.1, msg_info_2)
+					return
 				self.tempBusquedaDocumentales = None
 				self.IS_BUSQUEDA_DOCUMENTALES = False
 				# Añadimos documentales
@@ -513,6 +587,11 @@ _("""Reanudando la reproducción.""")
 					self.list_box_documentales.Append(self.Documentales.documentales[i].titulo)
 				self.list_box_documentales.SetSelection(0)
 			elif id == 401: # cortometrajes
+				if self.IS_BUSQUEDA_CORTOMETRAJES:
+					if ajustes.IS_HABLAR: utilidades.speak(0.1, msg_info_1)
+				else:
+					if ajustes.IS_HABLAR: utilidades.speak(0.1, msg_info_2)
+					return
 				self.tempBusquedaCortometrajes = None
 				self.IS_BUSQUEDA_CORTOMETRAJES = False
 				# Añadimos cortometrajes
@@ -524,7 +603,8 @@ _("""Reanudando la reproducción.""")
 		else: # Hay texto en el campo busqueda
 			buscar = event.GetValue().lower()
 			if id == 101: # peliculas
-				self.tempBusquedaPeliculas = self.Peliculas.buscar(buscar)
+				filtro = "Titulo" if self.frame.categoriaBusqueda[0] == 0 else dict_filtro.get(self.frame.categoriaBusqueda[0])
+				self.tempBusquedaPeliculas = self.Peliculas.buscar(buscar, filtro)
 				if self.tempBusquedaPeliculas: # Si hay resultados
 					self.IS_BUSQUEDA_PELICULAS = True
 					# Añadimos peliculas
@@ -541,7 +621,8 @@ _("""Reanudando la reproducción.""")
 					self.onFoco()
 
 			elif id == 201: # series
-				self.tempBusquedaSeries = self.Series.buscar(buscar)
+				filtro = dict_filtro.get(self.frame.categoriaBusqueda[1])
+				self.tempBusquedaSeries = self.Series.buscar(buscar, filtro)
 				if self.tempBusquedaSeries: # Si hay resultados
 					self.IS_BUSQUEDA_SERIES = True
 					# Añadimos series
@@ -558,7 +639,8 @@ _("""Reanudando la reproducción.""")
 					self.onFoco()
 
 			elif id == 301: # documentales
-				self.tempBusquedaDocumentales = self.Documentales.buscar(buscar)
+				filtro = dict_filtro.get(self.frame.categoriaBusqueda[2])
+				self.tempBusquedaDocumentales = self.Documentales.buscar(buscar, filtro)
 				if self.tempBusquedaDocumentales: # Si hay resultados
 					self.IS_BUSQUEDA_DOCUMENTALES = True
 					# Añadimos documentales
@@ -575,7 +657,8 @@ _("""Reanudando la reproducción.""")
 					self.onFoco()
 
 			elif id == 401: # cortometrajes
-				self.tempBusquedaCortometrajes = self.Cortometrajes.buscar(buscar)
+				filtro = dict_filtro.get(self.frame.categoriaBusqueda[3])
+				self.tempBusquedaCortometrajes = self.Cortometrajes.buscar(buscar, filtro)
 				if self.tempBusquedaCortometrajes: # Si hay resultados
 					self.IS_BUSQUEDA_CORTOMETRAJES = True
 					# Añadimos cortometrajes
@@ -747,7 +830,7 @@ _("""Reanudando la reproducción.""")
 """Se encuentra en el resultado {} de {}""".format(obj.GetSelection()+1, obj.GetCount())
 				utilidades.speak(0.1, msg)
 
-		elif (event.ControlDown(), event.GetUnicodeKey()) == (True, 70): # Control+F mueve foco en el listbox a número dado.
+		elif (event.ControlDown(), event.GetUnicodeKey()) == (True, 70): # Control+F mueve foco en el listbox a número dado. o saca menú en campos de busqueda para filtrar
 			if foco in [2, 102, 202, 302, 402]: # listbox
 				obj = event.GetEventObject()
 				if obj.GetString(obj.GetSelection()) == _("Sin resultados"): return
@@ -759,6 +842,14 @@ _("""Reanudando la reproducción.""")
 					obj.SetSelection(int(dlg.numero.GetValue()) - 1)
 				else: # Cancelamos
 					dlg.Destroy()
+			elif foco in [101, 201, 301, 401]: # campo busqueda peliculas, series, documentales, cortometrajes
+				wx.CallAfter(self.onTextFiltro, event.GetEventObject())
+
+		elif (event.ControlDown(), event.GetKeyCode()) == (True, 66): # Ctrl+B borra campo y vuelve listbox a predefinido
+			if foco in [101, 201, 301, 401]: # campo busqueda peliculas, series, documentales, cortometrajes
+				obj = event.GetEventObject()
+				obj.Clear()
+				wx.CallAfter(self.onTextEnter, obj)
 
 		elif event.GetUnicodeKey() == wx.WXK_ESCAPE:
 			self.onSalir(None)
@@ -944,7 +1035,7 @@ class keyboardReproductor():
 
 	def onTeclasReproductor(self, opcion=0):
 		""" Función para definir las teclas que se utilizarán en el reproductor en cualquier ventana del complemento """
-		IDS = [10000, 10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008]
+		IDS = [10000, 10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008, 10009]
 		for i in IDS:
 			wx.RegisterId(i)
 			if opcion == 0: # Pantalla principal
@@ -961,7 +1052,8 @@ class keyboardReproductor():
 		adelantar = wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_F3, 10006)
 		detener = wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_F4, 10007)
 		informacion = wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_F9, 10008)
-		listaTeclas = [volumenAbajo, volumenArriba, velocidadAbajo, velocidadArriba, atrsar, reproducir, adelantar, detener, informacion]
+		informacionValor = wx.AcceleratorEntry(wx.ACCEL_NORMAL, wx.WXK_F12, 10009)
+		listaTeclas = [volumenAbajo, volumenArriba, velocidadAbajo, velocidadArriba, atrsar, reproducir, adelantar, detener, informacion, informacionValor]
 		tabla_acceleradora = wx.AcceleratorTable(listaTeclas)
 		if opcion == 0:
 			self.frame.SetAcceleratorTable(tabla_acceleradora)
@@ -1019,6 +1111,14 @@ class keyboardReproductor():
 		elif id == 10008: # Información
 			info = _("Sin nada en reproducción") if self.frame.reproductor.estado() in ["State.NothingSpecial", "State.Stopped"] else _("Tiempo transcurrido: {} / Tiempo total: {}").format(self.frame.reproductor.conviertetiempo(self.frame.reproductor.tiempotranscurrido()), self.frame.reproductor.conviertetiempo(self.frame.reproductor.tiempototal()))
 			msg = _("Sin nada en reproducción") if self.frame.reproductor.estado() in ["State.NothingSpecial", "State.Stopped"] else _("Tiempo transcurrido: {} / Tiempo total: {}").format(self.frame.reproductor.conviertetiempo(self.frame.reproductor.tiempotranscurrido()), self.frame.reproductor.conviertetiempo(self.frame.reproductor.tiempototal()))
+		elif id == 10009: # InformaciónValor (activa o desactiva mensajes)
+			ajustes.IS_HABLAR = False if ajustes.IS_HABLAR else True
+			msgAccion = _("Mensajes de información activados") if ajustes.IS_HABLAR else _("Mensajes de información desactivados")
+			self.frame.frame.AjustesApp.GuardaDatos()
+			self.frame.frame.AjustesApp.CargaDatos()
+			self.frame.frame.AjustesApp.refrescaDatos()
+			info = msgAccion
+			msg = msgAccion
 		utilidades.speak(0.1, msg) if ajustes.IS_HABLAR else utilidades.speak(0.1, info)
 
 class HiloComplemento(Thread):

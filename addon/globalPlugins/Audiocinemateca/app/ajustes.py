@@ -41,6 +41,7 @@ listaAdelantar = [_("1 segundo"), _("5 segundos"), _("15 segundos"), _("30 segun
 adelantar = 3 # Adelanta la reproducción pertenece a la posición de la lista listaAdelantar
 listaResultados = [_("10 resultados"), _("15 resultados"), _("20 resultados"), _("25 resultados")]
 resultados = 0
+listaFiltroBusqueda = [_("Título"), _("Año"), _("Género"), _("País"), _("Director"), _("Guión"), _("Música"), _("Fotografía"), _("Reparto"),  _("Productora"), _("Narración"), _("Sinopsis")]
 # Diccionario para el tiempo atrasar - adelantar en segundos
 dict_tiempo = {
 	0:1,

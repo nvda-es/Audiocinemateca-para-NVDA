@@ -150,7 +150,7 @@ Error:
 				return [True, None]
 			elif z[1] == None:
 				msg = \
-_("""No se pudo descargar la versión  del catalogo, intentelo más tarde.""")
+_("""No se pudo descargar la versión  del catálogo, intentelo más tarde.""")
 				return [False, msg]
 			else:
 				msg = \
@@ -162,7 +162,7 @@ Error:
 				return [False, msg]
 		elif x[1] == None:
 			msg = \
-_("""No se pudo descargar el catalogo, intentelo más tarde.""")
+_("""No se pudo descargar el catálogo, intentelo más tarde.""")
 			return [False, msg]
 		else:
 			msg = \
@@ -227,7 +227,7 @@ Error:
 
 	def download_catalogo(self):
 		msg = \
-_("""Descargando el catalogo de la Audiocinemateca.
+_("""Descargando el catálogo de la Audiocinemateca.
 Esta acción tiene varios pasos.
 Espere por favor…""")
 		self.textorefresco.Clear()
@@ -235,7 +235,7 @@ Espere por favor…""")
 		x = self.descargar_catalogo()
 		if x[0]:  # Descarga correcta.
 			msg = \
-_("""Descomprimiendo el catalogo de la Audiocinemateca.
+_("""Descomprimiendo el catálogo de la Audiocinemateca.
 Esta acción tiene varios pasos.
 Espere por favor…""")
 			self.textorefresco.Clear()
@@ -244,7 +244,7 @@ Espere por favor…""")
 			if z[0]: # Descompresión correcta.
 				self.borrar()
 				msg = \
-_("""Descarga del catalogo de la Audiocinemateca correcto.
+_("""Descarga del catálogo de la Audiocinemateca correcto.
 Ya puede cerrar esta pantalla y disfrutar.""")
 				self.textorefresco.Clear()
 				self.textorefresco.AppendText(msg)
@@ -741,7 +741,7 @@ class Previsualizador(wx.Dialog):
 		self.textoResultado.WriteText(_("Director:\n"))
 		self.textoResultado.WriteText(director + "\n")
 
-		self.textoResultado.WriteText(_("Guión:\n"))
+		self.textoResultado.WriteText(_("Guion:\n"))
 		self.textoResultado.WriteText(guion + "\n")
 
 		self.textoResultado.WriteText(_("Música:\n"))
