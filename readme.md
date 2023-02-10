@@ -48,6 +48,8 @@ Ten en cuenta que si hacemos un portable y lo compartimos, en esta carpeta estar
 
 El autor del complemento no se responsabiliza si compartes el usuario o contraseña, quedas avisado de la ubicación de dichos datos y en tu mano está el que no sean compartidos.
 
+El tamaño de las actualizaciones de este complemento de la base de datos es aproximadamente entre 1.5 / 2 megas.
+
 ## Menú Herramientas / Audiocinemateca
 
 En este menú tenemos las siguientes posibilidades:
