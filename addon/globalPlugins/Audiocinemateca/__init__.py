@@ -122,14 +122,25 @@ _("""El complemento borrará toda la configuración guardada y volverá a valore
 	def script_inicio(self, event, menu=False):
 		if ajustes.IS_WinON == False:
 			if utilidades.IS_INTERNET():
-				if not len(self.datos.resultados_datos):
-					if not os.path.exists(ajustes.dirGeneral):
-						try:
-							os.mkdir(ajustes.dirGeneral)
-						except:
-							pass
-					self.datos.cargaDatos()
-					self.datos.cargaVersion()
+				try:
+					if not len(self.datos.resultados_datos):
+						if not os.path.exists(ajustes.dirGeneral):
+							try:
+								os.mkdir(ajustes.dirGeneral)
+							except:
+								pass
+						self.datos.cargaDatos()
+						self.datos.cargaVersion()
+				except:
+					msg = \
+_("""El complemento Audiocinemateca todavía se esta cargando.
+
+Vuelva a intentarlo en unos segundos.""")
+					if menu:
+						gui.messageBox(msg, _("Información"), wx.ICON_INFORMATION)
+					else:
+						ui.message(msg)
+					return
 				HiloComplemento(self, 1).start()
 			else:
 				ui.message("No se encontró conexión a internet. No es posible iniciar el complemento.")

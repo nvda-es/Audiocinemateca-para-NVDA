@@ -375,7 +375,7 @@ Espere por favor…""")
 				msg = \
 _("""Actualización de la base de datos completada.
 
-El complemento se cerrará, para cargar la nueva base de datos vuelva a abrirlo.
+El complemento se cerrará, espere a que se cargue la nueva base de datos y se vuelva a abrir el complemento.
 
 Disfrute de la Audiocinemateca.""")
 				self.textorefresco.Clear()

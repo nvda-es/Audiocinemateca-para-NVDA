@@ -16,6 +16,8 @@ from . import dialogos
 
 addonHandler.initTranslation()
 
+_selfTemp = None
+
 class VentanaPrincipal(wx.Dialog):
 	def __init__(self, parent, frame):
 		super(VentanaPrincipal, self).__init__(parent, -1, _("Audiocinemateca"), size = (800, 600)) #(1400, 850))
@@ -29,7 +31,8 @@ _("""Cargando la interface...""")
 		ajustes.IS_WinON = True
 		# Obtenemos el frame del complemento
 		self.frame = frame
-
+		global _selfTemp
+		_selfTemp = frame
 		# Definimos el reproductor que obtenemos del frame del complemento y le añadimos el frame de esta ventana principal
 		self.reproductor = self.frame.reproductor
 		self.reproductor.addFrameMain(self)
@@ -263,7 +266,6 @@ _("""Cargando la interface...""")
 		self.Bind(wx.EVT_CONTEXT_MENU, self.menuSetID)
 
 		self.Bind(wx.EVT_BUTTON, self.onBoton)
-		self.Bind(wx.EVT_CONTEXT_MENU, self.menuSetID)
 
 		self.Bind(wx.EVT_CHAR_HOOK, self.OnKeyEvent)
 		self.Bind(wx.EVT_CLOSE, self.onSalir)
@@ -791,7 +793,7 @@ _("""Reanudando la reproducción.""")
 				return
 			elif result == 2:
 				dlg1.Destroy()
-				self.onSalir(None)
+				self.onSalir(None, True)
 			else:
 				dlg1.Destroy()
 				return
@@ -893,7 +895,7 @@ _("""Reanudando la reproducción.""")
 		else:
 			event.Skip()
 
-	def onSalir(self, event):
+	def onSalir(self, event, lanzar=False):
 		ajustes.IS_WinON = False
 		self.reproductor.addFrameMain(None)
 		self.frame.AjustesApp.GuardaDatos()
@@ -902,10 +904,12 @@ _("""Reanudando la reproducción.""")
 		self.datos.clear()
 		self.Destroy()
 		gui.mainFrame.postPopup()
+		if lanzar:
+			HiloComplemento(_selfTemp, 1).start()
 
 class VentanaOpciones(wx.Dialog):
 	def __init__(self, parent, frame):
-		super(VentanaOpciones, self).__init__(parent, -1, _("Opciones de Audiocinemateca"), size = (1000, 800))
+		super(VentanaOpciones, self).__init__(parent, -1, _("Opciones de Audiocinemateca"), size = (800, 600))
 
 		# Bandera ventana opciones abierta.
 		ajustes.IS_WinON = True

@@ -2,4 +2,4 @@
 @ECHO OFF
 scons --clean
 scons
-audiocinemateca-1.0.nvda-addon
+audiocinemateca-1.1.nvda-addon
