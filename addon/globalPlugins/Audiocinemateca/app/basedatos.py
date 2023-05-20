@@ -8,6 +8,7 @@ import os
 import sys
 import json
 import random
+import string
 
 addonHandler.initTranslation()
 
@@ -235,7 +236,21 @@ class ColeccionPeliculas:
 	def buscar(self, valor, categoria):
 		results = []
 		for pelicula in self.reversed_datos:
-			if valor in pelicula[categoria].lower():
+			texto = pelicula[categoria].lower()
+			# Eliminamos cualquier signo de puntuacion
+			for s in string.punctuation:
+				texto = texto.replace(s,"")
+				valor = valor.replace(s, "")
+			# Eliminamos los signos diacríticos 
+			for s in (("á", "a"), ("é", "e"), ("í","i"), ("ó","o"), ("ú","u"), ("ü","u")):
+				texto = texto.replace(s[0],s[1])
+				valor = valor.replace(s[0],s[1])
+			# Convertimos las cadenas de texto en conjuntos de palabras
+			palabras_texto = set(texto.split())
+			palabras_buscadas = set(valor.split())
+			# Eliminamos de la busqueda los articulos y otras palabras superfluas. Solo español.
+			palabras_buscadas = palabras_buscadas-set(["a", "y", "el", "la", "los", "las", "en", "un", "una", "unos", "de", "del"])
+			if palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
 				results.append(pelicula)
 		return results if len(results) >= 1 else None
 
@@ -271,7 +286,21 @@ class ColeccionSeries:
 	def buscar(self, valor, categoria):
 		results = []
 		for serie in self.reversed_datos:
-			if valor in serie[categoria].lower():
+			texto = serie[categoria].lower()
+			# Eliminamos cualquier signo de puntuacion
+			for s in string.punctuation:
+				texto = texto.replace(s,"")
+				valor = valor.replace(s, "")
+			# Eliminamos los signos diacríticos 
+			for s in (("á", "a"), ("é", "e"), ("í","i"), ("ó","o"), ("ú","u"), ("ü","u")):
+				texto = texto.replace(s[0],s[1])
+				valor = valor.replace(s[0],s[1])
+			# Convertimos las cadenas de texto en conjuntos de palabras
+			palabras_texto = set(texto.split())
+			palabras_buscadas = set(valor.split())
+			# Eliminamos de la busqueda los articulos y otras palabras superfluas. Solo español.
+			palabras_buscadas = palabras_buscadas-set(["a", "y", "el", "la", "los", "las", "en", "un", "una", "unos", "de", "del"])
+			if palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
 				results.append(serie)
 		return results if len(results) >= 1 else None
 
@@ -307,7 +336,21 @@ class ColeccionDocumentales:
 	def buscar(self, valor, categoria):
 		results = []
 		for documental in self.reversed_datos:
-			if valor in documental[categoria].lower():
+			texto = documental[categoria].lower()
+			# Eliminamos cualquier signo de puntuacion
+			for s in string.punctuation:
+				texto = texto.replace(s,"")
+				valor = valor.replace(s, "")
+			# Eliminamos los signos diacríticos 
+			for s in (("á", "a"), ("é", "e"), ("í","i"), ("ó","o"), ("ú","u"), ("ü","u")):
+				texto = texto.replace(s[0],s[1])
+				valor = valor.replace(s[0],s[1])
+			# Convertimos las cadenas de texto en conjuntos de palabras
+			palabras_texto = set(texto.split())
+			palabras_buscadas = set(valor.split())
+			# Eliminamos de la busqueda los articulos y otras palabras superfluas. Solo español.
+			palabras_buscadas = palabras_buscadas-set(["a", "y", "el", "la", "los", "las", "en", "un", "una", "unos", "de", "del"])
+			if palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
 				results.append(documental)
 		return results if len(results) >= 1 else None
 
@@ -343,7 +386,21 @@ class ColeccionCortometrajes:
 	def buscar(self, valor, categoria):
 		results = []
 		for cortometraje in self.reversed_datos:
-			if valor in cortometraje[categoria].lower():
+			texto = cortometraje[categoria].lower()
+			# Eliminamos cualquier signo de puntuacion
+			for s in string.punctuation:
+				texto = texto.replace(s,"")
+				valor = valor.replace(s, "")
+			# Eliminamos los signos diacríticos 
+			for s in (("á", "a"), ("é", "e"), ("í","i"), ("ó","o"), ("ú","u"), ("ü","u")):
+				texto = texto.replace(s[0],s[1])
+				valor = valor.replace(s[0],s[1])
+			# Convertimos las cadenas de texto en conjuntos de palabras
+			palabras_texto = set(texto.split())
+			palabras_buscadas = set(valor.split())
+			# Eliminamos de la busqueda los articulos y otras palabras superfluas. Solo español.
+			palabras_buscadas = palabras_buscadas-set(["a", "y", "el", "la", "los", "las", "en", "un", "una", "unos", "de", "del"])
+			if palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
 				results.append(cortometraje)
 		return results if len(results) >= 1 else None
 
