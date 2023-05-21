@@ -874,6 +874,8 @@ _("""Reanudando la reproducción.""")
 			elif foco == 402:
 				if self.IS_BUSQUEDA_CORTOMETRAJES and ajustes.IS_HABLAR: utilidades.speak(0.1, msg)
 				self.text_busqueda_cortometrajes.Clear()
+			else:
+				event.Skip()
 
 		elif event.GetUnicodeKey() == wx.WXK_ESCAPE:
 			self.onSalir(None)

@@ -257,7 +257,8 @@ class ColeccionPeliculas:
 					# Si están todas las palabras menos una y la que falta es parte del texto aunque no sea una palabra completa, la incluimos también.
 					results.append(pelicula)
 			elif valor in texto: # Si la búsqueda por palabras no da resultado probamos una búsqueda de texto completo.
-				results.append(pelicula)
+				# Limitamos la cantidad de resultados que puede ofrecer este tipo de búsqueda para evitar que la lista sea demasiado larga y se ralentice al actualizarla.
+				if len(results) <= 100: results.append(pelicula)
 		return results if len(results) >= 1 else None
 
 class ColeccionSeries:
@@ -313,7 +314,8 @@ class ColeccionSeries:
 					# Si están todas las palabras menos una y la que falta es parte del texto aunque no sea una palabra completa, la incluimos también.
 					results.append(serie)
 			elif valor in texto: # Si la búsqueda por palabras no da resultado probamos una búsqueda de texto completo.
-				results.append(serie)
+				# Limitamos la cantidad de resultados que puede ofrecer este tipo de búsqueda para evitar que la lista sea demasiado larga y se ralentice al actualizarla.
+				if len(results) <= 100: results.append(serie)
 		return results if len(results) >= 1 else None
 
 class ColeccionDocumentales:
@@ -369,7 +371,8 @@ class ColeccionDocumentales:
 					# Si están todas las palabras menos una y la que falta es parte del texto aunque no sea una palabra completa, la incluimos también.
 					results.append(documental)
 			elif valor in texto: # Si la búsqueda por palabras no da resultado probamos una búsqueda de texto completo.
-				results.append(documental)
+				# Limitamos la cantidad de resultados que puede ofrecer este tipo de búsqueda para evitar que la lista sea demasiado larga y se ralentice al actualizarla.
+				if len(results) <= 100: results.append(documental)
 		return results if len(results) >= 1 else None
 
 class ColeccionCortometrajes:
@@ -425,7 +428,8 @@ class ColeccionCortometrajes:
 					# Si están todas las palabras menos una y la que falta es parte del texto aunque no sea una palabra completa, la incluimos también.
 					results.append(cortometraje)
 			elif valor in texto: # Si la búsqueda por palabras no da resultado probamos una búsqueda de texto completo.
-				results.append(cortometraje)
+				# Limitamos la cantidad de resultados que puede ofrecer este tipo de búsqueda para evitar que la lista sea demasiado larga y se ralentice al actualizarla.
+				if len(results) <= 100: results.append(cortometraje)
 		return results if len(results) >= 1 else None
 
 class ColeccionEpisodios:
