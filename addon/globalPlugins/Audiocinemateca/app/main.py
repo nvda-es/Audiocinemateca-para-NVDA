@@ -860,6 +860,21 @@ _("""Reanudando la reproducción.""")
 				obj.Clear()
 				wx.CallAfter(self.onTextEnter, obj)
 
+		elif event.GetUnicodeKey() == wx.WXK_BACK: # retroceso en la lista borra el campo de búsqueda y vuelve listbox a predefinido
+			msg = _("Limpiando la búsqueda.")
+			if foco == 102:
+				if self.IS_BUSQUEDA_PELICULAS and ajustes.IS_HABLAR: utilidades.speak(0.1, msg)
+				self.text_busqueda_peliculas.Clear()
+			elif foco == 202:
+				if self.IS_BUSQUEDA_SERIES and ajustes.IS_HABLAR: utilidades.speak(0.1, msg)
+				self.text_busqueda_series.Clear()
+			elif foco == 302:
+				if self.IS_BUSQUEDA_DOCUMENTALES and ajustes.IS_HABLAR: utilidades.speak(0.1, msg)
+				self.text_busqueda_documentales.Clear()
+			elif foco == 402:
+				if self.IS_BUSQUEDA_CORTOMETRAJES and ajustes.IS_HABLAR: utilidades.speak(0.1, msg)
+				self.text_busqueda_cortometrajes.Clear()
+
 		elif event.GetUnicodeKey() == wx.WXK_ESCAPE:
 			self.onSalir(None)
 
