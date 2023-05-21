@@ -250,7 +250,13 @@ class ColeccionPeliculas:
 			palabras_buscadas = set(valor.split())
 			# Eliminamos de la busqueda los articulos y otras palabras superfluas. Solo español.
 			palabras_buscadas = palabras_buscadas-set(["a", "y", "el", "la", "los", "las", "en", "un", "una", "unos", "de", "del"])
-			if palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
+			if palabras_buscadas and palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
+				results.append(pelicula)
+			elif palabras_buscadas.intersection(palabras_texto) and len(palabras_buscadas.difference(palabras_texto)) == 1:
+				if palabras_buscadas.difference(palabras_texto).pop() in texto:
+					# Si están todas las palabras menos una y la que falta es parte del texto aunque no sea una palabra completa, la incluimos también.
+					results.append(pelicula)
+			elif valor in texto: # Si la búsqueda por palabras no da resultado probamos una búsqueda de texto completo.
 				results.append(pelicula)
 		return results if len(results) >= 1 else None
 
@@ -300,7 +306,13 @@ class ColeccionSeries:
 			palabras_buscadas = set(valor.split())
 			# Eliminamos de la busqueda los articulos y otras palabras superfluas. Solo español.
 			palabras_buscadas = palabras_buscadas-set(["a", "y", "el", "la", "los", "las", "en", "un", "una", "unos", "de", "del"])
-			if palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
+			if palabras_buscadas and palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
+				results.append(serie)
+			elif palabras_buscadas.intersection(palabras_texto) and len(palabras_buscadas.difference(palabras_texto)) == 1:
+				if palabras_buscadas.difference(palabras_texto).pop() in texto:
+					# Si están todas las palabras menos una y la que falta es parte del texto aunque no sea una palabra completa, la incluimos también.
+					results.append(serie)
+			elif valor in texto: # Si la búsqueda por palabras no da resultado probamos una búsqueda de texto completo.
 				results.append(serie)
 		return results if len(results) >= 1 else None
 
@@ -350,7 +362,13 @@ class ColeccionDocumentales:
 			palabras_buscadas = set(valor.split())
 			# Eliminamos de la busqueda los articulos y otras palabras superfluas. Solo español.
 			palabras_buscadas = palabras_buscadas-set(["a", "y", "el", "la", "los", "las", "en", "un", "una", "unos", "de", "del"])
-			if palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
+			if palabras_buscadas and palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
+				results.append(documental)
+			elif palabras_buscadas.intersection(palabras_texto) and len(palabras_buscadas.difference(palabras_texto)) == 1:
+				if palabras_buscadas.difference(palabras_texto).pop() in texto:
+					# Si están todas las palabras menos una y la que falta es parte del texto aunque no sea una palabra completa, la incluimos también.
+					results.append(documental)
+			elif valor in texto: # Si la búsqueda por palabras no da resultado probamos una búsqueda de texto completo.
 				results.append(documental)
 		return results if len(results) >= 1 else None
 
@@ -400,7 +418,13 @@ class ColeccionCortometrajes:
 			palabras_buscadas = set(valor.split())
 			# Eliminamos de la busqueda los articulos y otras palabras superfluas. Solo español.
 			palabras_buscadas = palabras_buscadas-set(["a", "y", "el", "la", "los", "las", "en", "un", "una", "unos", "de", "del"])
-			if palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
+			if palabras_buscadas and palabras_buscadas.issubset(palabras_texto): # Si todas las palabras buscadas están en texto
+				results.append(cortometraje)
+			elif palabras_buscadas.intersection(palabras_texto) and len(palabras_buscadas.difference(palabras_texto)) == 1:
+				if palabras_buscadas.difference(palabras_texto).pop() in texto:
+					# Si están todas las palabras menos una y la que falta es parte del texto aunque no sea una palabra completa, la incluimos también.
+					results.append(cortometraje)
+			elif valor in texto: # Si la búsqueda por palabras no da resultado probamos una búsqueda de texto completo.
 				results.append(cortometraje)
 		return results if len(results) >= 1 else None
 
