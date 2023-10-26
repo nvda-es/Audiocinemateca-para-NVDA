@@ -3,6 +3,6 @@
 scons --clean
 git init
 git add --all
-git commit -m "Ahora la gui se vuelve a cargar cuando se actualiza la base de datos"
+git commit -m "Añadida búsqueda por Javi y preparación del código para NVDA 2024"
 git push -u origin master
 pause
