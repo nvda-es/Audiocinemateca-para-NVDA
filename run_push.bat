@@ -3,6 +3,6 @@
 scons --clean
 git init
 git add --all
-git commit -m "Añadida búsqueda por Javi y preparación del código para NVDA 2024"
+git commit -m "v1.2 ctypes add"
 git push -u origin master
 pause

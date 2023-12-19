@@ -9,20 +9,19 @@ import threading
 import os
 import sys
 dirAddon=os.path.dirname(__file__)
-sys.path.append(dirAddon)
 if sys.version.startswith("3.11"):
+	sys.path.append(dirAddon)
 	sys.path.append(os.path.join(dirAddon, "_311"))
 	import ctypes
-else:
-	sys.path.append(os.path.join(dirAddon, "_37"))
-	import ctypes
+	ctypes.__path__.append(os.path.join(dirAddon, "_311", "ctypes"))
 os.environ['PYTHON_VLC_MODULE_PATH']=os.path.abspath(os.path.dirname(__file__))
 os.environ['PYTHON_VLC_LIB_PATH']=os.path.abspath(os.path.join(os.path.dirname(__file__), "libvlc.dll"))
 curDir = os.getcwd()
 os.chdir(dirAddon)
 from . import vlc
 os.chdir(curDir)
-del sys.path[-2:]
+if sys.version.startswith("3.11"):
+	del sys.path[-2:]
 
 addonHandler.initTranslation()
 
