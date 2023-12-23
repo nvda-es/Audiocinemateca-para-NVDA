@@ -187,6 +187,18 @@ El documento principal no se modificará, siendo una orientación para el usuari
 
 El usuario es el responsable de revisar esta sección para estar informado de los cambios.
 
+### Versión 1.2.
+
+* Añadido nueva carga de la interface al actualizar la base de datos.
+
+Ahora cuando se actualice la base de datos, automáticamente la interface se volverá a cargar.
+
+* Añadida nueva búsqueda inmediata por @javidominguez
+
+Ahora cuando empecemos a escribir en la búsqueda se irán mostrando los resultados que coincidan.
+
+* Compatible con NVDA 2024.1
+
 ### Versión 1.1.
 
 * Añadidos filtros de búsqueda.
