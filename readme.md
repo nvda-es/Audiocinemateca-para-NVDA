@@ -187,6 +187,16 @@ El documento principal no se modificará, siendo una orientación para el usuari
 
 El usuario es el responsable de revisar esta sección para estar informado de los cambios.
 
+### Versión 1.3.
+
+* Añadido guardar posición de reproducción
+
+Ahora cuando detengamos una reproducción se guardará una marca con el tiempo.
+
+Si volvemos a reproducir la película, serie (en este caso capitulo), documental o cortometraje y detecta que hay una marca guardada nos pedirá si deseamos iniciar desde donde se guardo la reproducción o desde el principio.
+
+* Solución de errores.
+
 ### Versión 1.2.
 
 * Añadido nueva carga de la interface al actualizar la base de datos.

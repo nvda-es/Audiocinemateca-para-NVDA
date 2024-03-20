@@ -9,6 +9,8 @@ import sys
 import json
 import random
 import string
+import hashlib
+from logHandler import log
 
 addonHandler.initTranslation()
 
@@ -544,3 +546,93 @@ class Inicio_DB:
 
 	def GetAleatoria(self, Peliculas, Series, Documentales, Cortometrajes):
 		return RandomTitleGenerator([Peliculas.peliculas[i].titulo for i in range(len(Peliculas.peliculas))], [Series.series[i].titulo for i in range(len(Series.series))], [Documentales.documentales[i].titulo for i in range(len(Documentales.documentales))], [Cortometrajes.cortometrajes[i].titulo for i in range(len(Cortometrajes.cortometrajes))]).get_random_title()
+
+class GestorVisualizacion:
+	"""
+	Clase para manejar un JSON con visualizaciones SHA-256 que identifican URLs y sus tiempos asociados.
+	"""
+
+	def __init__(self):
+		"""
+		Inicializa el gestor de visualización.
+		"""
+
+		self.datos = {}
+		self.archivo = os.path.join(globalVars.appArgs.configPath, "Audiocinemateca", ".visualizacion")
+		self.cargar_de_archivo()
+
+	def agregar_editar_visualizacion(self, url, tiempo):
+		"""
+		Agrega o edita una visualización SHA-256 para una URL con su tiempo asociado.
+
+		Args:
+			url (str): La URL a agregar o editar (SHA-256).
+			tiempo (int): El tiempo asociado a la URL.
+		"""
+		firma = hashlib.sha256(url.encode()).hexdigest()
+		self.datos[firma] = tiempo
+		self.guardar_en_archivo()
+
+	def borrar_visualizacion(self, url):
+		"""
+		Borra una visualización SHA-256 asociada a una URL.
+
+		Args:
+			url (str): La URL cuya firma se desea borrar (SHA-256).
+		"""
+		firma = hashlib.sha256(url.encode()).hexdigest()
+		if firma in self.datos:
+			del self.datos[firma]
+			self.guardar_en_archivo()
+
+	def comprobar_visualizacion(self, url):
+		"""
+		Comprueba si una visualización SHA-256 está presente y devuelve su tiempo asociado.
+
+		Args:
+			url (str): La firma SHA-256 a comprobar.
+
+		Returns:
+			int o None: El tiempo asociado a la firma, o None si la firma no está presente.
+		"""
+		firma = hashlib.sha256(url.encode()).hexdigest()
+		return self.datos.get(firma, None)
+
+	def guardar_en_archivo(self):
+		"""
+		Guarda las visualizaciones actuales en un archivo JSON.
+		"""
+		try:
+			with open(self.archivo, 'w') as archivo:
+				json.dump(self.datos, archivo)
+		except Exception as e:
+			msg = \
+_("""Error al guardar el archivo de visualización.
+
+Error:
+
+{}""").format(e)
+			log.error(msg)
+
+	def cargar_de_archivo(self):
+		"""
+		Carga las visualizaciones desde un archivo JSON.
+		"""
+		if os.path.isfile(self.archivo):
+			try:
+				with open(self.archivo, 'r') as archivo:
+					self.datos = json.load(archivo)
+			except Exception as e:
+				msg = \
+_("""Error al cargar el archivo de visualización.
+
+Error:
+
+{}""").format(e)
+				log.error(msg)
+				self.datos = {}
+				self.guardar_en_archivo()
+		else:
+			self.datos = {}
+			self.guardar_en_archivo()
+

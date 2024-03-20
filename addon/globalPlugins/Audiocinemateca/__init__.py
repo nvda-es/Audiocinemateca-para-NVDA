@@ -37,6 +37,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.reproductorKeyboard = None
 		self.datos = None
 		self.categoriaBusqueda = [0, 0, 0, 0]
+		self.gestor_visualizacion = None
 		if hasattr(globalVars, "audiocinemateca_nvda"):
 			self.postStartupHandler()
 		core.postNvdaStartup.register(self.postStartupHandler)
@@ -55,6 +56,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.datos = Inicio_DB(self)
 		self.datos.cargaDatos()
 		self.datos.cargaVersion()
+		self.gestor_visualizacion = GestorVisualizacion()
+		self.gestor_visualizacion.cargar_de_archivo()
 		self.menu = wx.Menu()
 		self.tools_menu = gui.mainFrame.sysTrayIcon.toolsMenu
 		self.item1 = self.menu.Append(wx.ID_ANY, _("Iniciar la Audiocinemateca"))
@@ -78,10 +81,17 @@ _("""La ventana de Audiocinemateca está abierta.
 
 Las teclas para manejar el reproductor de manera externa solo se pueden usar si la pantalla de la Audiocinemateca está cerrada.""")
 		return msg
+
 	def terminate(self):
 		try:
 			core.postNvdaStartup.unregister(self.postStartupHandler)
 			self.tools_menu.Remove(self.audiocinematecaMenu)
+			msg = _("Detenido") if self.reproductor.estado() in ["State.Playing", "State.Paused"] else _("Sin nada en reproducción")
+			if msg == _("Detenido"):
+				url = self.reproductor.url
+				tiempo = self.reproductor.tiempotranscurrido()
+				self.gestor_visualizacion.agregar_editar_visualizacion(url, tiempo)
+			self.reproductor.stop()
 		except:
 			pass
 		super().terminate()
@@ -259,6 +269,10 @@ _("""La ventana de opciones solo puede ser llamada cuando la interfaz de la Audi
 		else:
 			msg = _("Detenido") if self.reproductor.estado() in ["State.Playing", "State.Paused"] else _("Sin nada en reproducción")
 			ui.message(msg)
+			if msg == _("Detenido"):
+				url = self.reproductor.url
+				tiempo = self.reproductor.tiempotranscurrido()
+				self.gestor_visualizacion.agregar_editar_visualizacion(url, tiempo)
 			self.reproductor.stop()
 
 	@script(gesture=None, description= _("Información de la reproducción"), category= "audiocinemateca")

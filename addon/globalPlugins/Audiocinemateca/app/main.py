@@ -453,10 +453,38 @@ _("""Reanudando la reproducción.""")
 
 			url_temporal = "https://audiocinemateca.com/{}".format(enlace_temporal)
 			url= url_temporal.replace("//", "//{}:{}@".format(ajustes.usuario, ajustes.contraseña))
+			if self.reproductor.estado() in ["State.Playing", "State.Paused"]:
+				url = self.reproductor.url
+				tiempo = self.reproductor.tiempotranscurrido()
+				self.frame.gestor_visualizacion.agregar_editar_visualizacion(url, tiempo)
+				self.reproductor.stop()
+
+			chk_visualizacion = self.frame.gestor_visualizacion.comprobar_visualizacion(url)
 			self.reproductor.file(url)
 			self.reproductor.volumen(int(ajustes.volumen))
 			self.reproductor.velocidad(float(ajustes.listaVelocidad[ajustes.velocidad]))
-			self.reproductor.play()
+			if chk_visualizacion is None:
+				self.reproductor.play()
+			else:
+				xguiMsg = \
+_("""Esta reproducción tiene una posición guardada en:
+
+{}
+
+* Si, para continuar la reproducción donde lo dejamos.
+
+* No, para empezar desde el principio.
+
+¿Desea continuar la reproducción o empezar desde el principio?""").format(self.reproductor.conviertetiempo(chk_visualizacion))
+				msgx = wx.MessageDialog(None, xguiMsg, _("Pregunta"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+				ret = msgx.ShowModal()
+				msgx.Destroy
+				if ret == wx.ID_YES:
+					self.reproductor.play()
+					self.reproductor.mover_posicion(chk_visualizacion)
+				elif ret == wx.ID_NO:
+					self.reproductor.play()
+
 			self.reproducirBTN.SetLabel(_("Pausar"))
 			self.estadoBotones(True)
 
@@ -759,6 +787,9 @@ _("""Reanudando la reproducción.""")
 		elif itemID == 1003: # Adelantar
 			self.reproductor.adelantar(ajustes.dict_tiempo.get(ajustes.adelantar))
 		elif itemID == 1004: # Parar
+			url = self.reproductor.url
+			tiempo = self.reproductor.tiempotranscurrido()
+			self.frame.gestor_visualizacion.agregar_editar_visualizacion(url, tiempo)
 			self.reproductor.stop()
 			self.reproducirBTN.SetLabel(_("Pausar")) if self.reproductor.estado() == "State.Playing" else self.reproducirBTN.SetLabel(_("Reproducir"))
 			self.estadoBotones(False)
@@ -767,8 +798,9 @@ _("""Reanudando la reproducción.""")
 		elif itemID == 3000: # Botón Menú
 			self.menu = wx.Menu()
 			item1 = self.menu.Append(1, _("&Actualizar base de datos"))
-			item2 = self.menu.Append(2, _("&Donar a la Audiocinemateca"))
-			item3 = self.menu.Append(3, _("&Cerrar"))
+			item2 = self.menu.Append(2, _("&Eliminar marcas de visualización"))
+			item3 = self.menu.Append(3, _("&Donar a la Audiocinemateca"))
+			item4 = self.menu.Append(4, _("&Cerrar"))
 			self.menu.Bind(wx.EVT_MENU, self.onMenusAcciones)
 			self.menuBTN.PopupMenu(self.menu)
 
@@ -808,9 +840,22 @@ _("""Reanudando la reproducción.""")
 			else:
 				dlg1.Destroy()
 				return
-		elif id == 2: # donar
+		elif id == 2: # Eliminar marcas
+			xguiMsg = \
+_("""Se eliminarán todas las marcas de visualización.
+
+Esta acción no es reversible.
+
+¿Esta seguro que desea continuar?""")
+			msgx = wx.MessageDialog(None, xguiMsg, _("Pregunta"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+			ret = msgx.ShowModal()
+			msgx.Destroy
+			if ret == wx.ID_YES:
+				self.frame.gestor_visualizacion.datos = {}
+				self.frame.gestor_visualizacion.guardar_en_archivo()
+		elif id == 3: # donar
 			wx.LaunchDefaultBrowser("https://audiocinemateca.com/donaciones", flags=0)
-		elif id == 3: # Cerrar
+		elif id == 4: # Cerrar
 			self.onSalir(None)
 		elif id in [4000, 4001, 4002, 4003, 4004]: # Ids de atrasar, hay que restar 4000 para guardar en ajustes ya que son ids creados especialmente para los menús y tienen que coincidir con la listaAtrasar
 			ajustes.atrasar = id - 4000
@@ -960,7 +1005,7 @@ class VentanaOpciones(wx.Dialog):
 		self.checkbox_1.SetValue(ajustes.IS_HABLAR)
 		sizer_list_general.Add(self.checkbox_1, 0, wx.EXPAND, 0)
 
-		label_1 = wx.StaticText(self.panel_list_general, wx.ID_ANY, _("Cantidad de resultados a mostrar de las &últimas entradas"))
+		label_1 = wx.StaticText(self.panel_list_general, wx.ID_ANY, _("Cantidad de &resultados a mostrar de las últimas entradas"))
 		sizer_list_general.Add(label_1, 0, wx.EXPAND, 0)
 
 		self.choice_resultados = wx.Choice(self.panel_list_general, 2, choices=ajustes.listaResultados)
@@ -1135,6 +1180,10 @@ class keyboardReproductor():
 		elif id == 10007: # Detener
 			msg = _("Deteniendo...") if self.frame.reproductor.estado() in ["State.Playing", "State.Paused"] else _("Sin nada en reproducción")
 			info = ""
+			if msg == _("Deteniendo..."):
+				url = self.frame.reproductor.url
+				tiempo = self.frame.reproductor.tiempotranscurrido()
+				self.frame.frame.gestor_visualizacion.agregar_editar_visualizacion(url, tiempo)
 			self.frame.reproductor.stop()
 			self.frame.reproducirBTN.SetLabel(_("Pausar")) if self.frame.reproductor.estado() == "State.Playing" else self.frame.reproducirBTN.SetLabel(_("Reproducir"))
 			self.frame.estadoBotones(False)

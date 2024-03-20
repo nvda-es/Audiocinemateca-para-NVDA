@@ -9,19 +9,23 @@ import threading
 import os
 import sys
 dirAddon=os.path.dirname(__file__)
+sys.path.append(dirAddon)
 if sys.version.startswith("3.11"):
-	sys.path.append(dirAddon)
 	sys.path.append(os.path.join(dirAddon, "_311"))
 	import ctypes
 	ctypes.__path__.append(os.path.join(dirAddon, "_311", "ctypes"))
+else:
+	sys.path.append(os.path.join(dirAddon, "_37"))
+	import ctypes
+	ctypes.__path__.append(os.path.join(dirAddon, "_37", "ctypes"))
+
 os.environ['PYTHON_VLC_MODULE_PATH']=os.path.abspath(os.path.dirname(__file__))
 os.environ['PYTHON_VLC_LIB_PATH']=os.path.abspath(os.path.join(os.path.dirname(__file__), "libvlc.dll"))
 curDir = os.getcwd()
 os.chdir(dirAddon)
 from . import vlc
 os.chdir(curDir)
-if sys.version.startswith("3.11"):
-	del sys.path[-2:]
+del sys.path[-2:]
 
 addonHandler.initTranslation()
 
@@ -42,6 +46,7 @@ class VlcClassLib():
 
 		self.frame = None
 		self.frameMain = None
+		self.url = None
 		self.Instance = vlc.Instance("--quiet") #"--quiet", "--file-logging", "--logfile=f:/vlc_log.txt") # Añadir log. 
 		self.Instance.log_unset() # Evita mensajes de consola.
 		self.handle = None
@@ -133,6 +138,7 @@ Es el dispositivo por defecto.
 	def file(self, valor):
 		self.Media = self.Instance.media_new(valor)
 		self.player.set_media(self.Media)
+		self.url = valor
 
 	def play(self):
 		self.player.play()
@@ -146,6 +152,7 @@ Es el dispositivo por defecto.
 
 	def stop(self):
 		self.player.stop()
+		self.url = None
 
 	def velocidad(self, valor):
 		self.player.set_rate(valor)
@@ -175,6 +182,9 @@ Es el dispositivo por defecto.
 		valorAdelantar = valor * 1000
 		self.player.set_time(self.tiempotranscurrido() + valorAdelantar)
 
+	def mover_posicion(self, valor):
+		self.player.set_time(valor)
+
 	def estado(self):
 		""" Los valores posibles a devolver son: VLC_STATE_PLAYING, VLC_STATE_PAUSED, VLC_STATE_STOPPED, VLC_STATE_ENDED, VLC_STATE_ERROR."""
 		return str(self.player.get_state())
@@ -183,6 +193,7 @@ Es el dispositivo por defecto.
 		return self.player.is_playing()
 
 	def handle_end_reached(self, event, *args, **kwargs):
+		self.frame.gestor_visualizacion.borrar_visualizacion(self.url)
 		wx.CallAfter(self.stop)
 		if self.frameMain:
 			wx.CallAfter(self.frameMain.reproducirBTN.SetLabel, _("Pausar")) if self.estado() == "State.Playing" else wx.CallAfter(self.frameMain.reproducirBTN.SetLabel, _("Reproducir"))
